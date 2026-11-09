@@ -9,7 +9,7 @@
   as a way to validate the harness on a target where a real bug is known to exist.
 
 ## Harness
-- See `ressources/` for the harness source.
+- See `resources/` for the harness source.
 - `size > INT_MAX` → size cap, avoids truncating the cast to `unsigned int`.
 - `str` / `str_len` are outputs → passed by address (`&`). `str` is heap-allocated by the
   library on success, so it is freed (otherwise LeakSanitizer reports a leak on each input).

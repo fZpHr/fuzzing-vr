@@ -1,3 +1,5 @@
+# fuzzing101
+
 Learning vulnerability research through fuzzing: Antonio Morales'
 [Fuzzing101](https://github.com/antonio-morales/Fuzzing101) course (AFL++), then my own
 harnesses written from scratch (libFuzzer).
