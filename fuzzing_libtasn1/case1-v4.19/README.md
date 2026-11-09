@@ -7,15 +7,15 @@ markdown
   harness. Parses untrusted input (the attack surface).
 
 ## Harness
-- See `ressources/test_fuzz1.c` for the source.
+- See `resources/test_fuzz1.c` for the source.
 - `size > INT_MAX` → size cap, so the cast to `int` can't truncate.
 - `len` is an output parameter → a local `int` is declared and passed by address (`&len`).
 
 ## Build
 
 clang -g -O1 -fsanitize=address,fuzzer -I libtasn1-4.19.0/lib/includes
-ressources/test_fuzz1.c libtasn1-4.19.0/lib/.libs/libtasn1.a -o fuzz_get_length_der
-./fuzz_get_length_der ressources/corpus/ -max_len=512
+resources/test_fuzz1.c libtasn1-4.19.0/lib/.libs/libtasn1.a -o fuzz_get_length_der
+./fuzz_get_length_der resources/corpus/ -max_len=512
 
 
 ## Result
