@@ -1,0 +1,7 @@
+AFLplusplus/
+fuzz_get_length_der
+fuzz_ber
+*.o
+*.a
+out/
+corpus_ber/

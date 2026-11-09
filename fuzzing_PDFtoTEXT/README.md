@@ -72,4 +72,13 @@ Later versions add a recursion-depth limit in the object parser, so a self-refer
 object stops the parsing instead of recursing forever.
 
 
+## What I learned
+This is a guided exercise (Fuzzing101) on an intentionally old, known-vulnerable version,
+with seeds provided — not an original finding. The value was doing the full workflow end to end:
 
+- Compile a target with coverage instrumentation (`afl-clang-fast`).
+- Run a coverage-guided campaign and let AFL reach the crash on its own.
+- Triage a crash: reproduce it manually, then read the gdb backtrace to find the root cause
+  (here, an indirect recursion cycle, not a single self-calling function).
+- Minimize the crashing input with `afl-tmin` down to the exact faulty object.
+- Map a raw segfault back to a precise source-level bug and a CVE.
