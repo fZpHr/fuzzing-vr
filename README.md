@@ -1,6 +1,4 @@
-# fuzzing
-
-Learning vulnerability research through fuzzing with AFL++ and libFuzzer.
+# Learning vulnerability research through fuzzing with AFL++ and libFuzzer.
 
 ## Guided exercise — Antonio Morales' [Fuzzing101](https://github.com/antonio-morales/Fuzzing101)
 - [Xpdf 3.02 / pdftotext — CVE-2019-13288](./fuzzing_PDFtoTEXT) — uncontrolled recursion /
