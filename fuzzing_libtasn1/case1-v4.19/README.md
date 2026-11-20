@@ -1,10 +1,12 @@
-markdown
-# Fuzzing libtasn1 with a custom libFuzzer harness
+# Case 1 — Learning libFuzzer with GNU libtasn1 4.19.0
 
-## Target
+## Objective
 - GNU libtasn1 4.19.0, function `asn1_get_length_der` (parses the DER length field).
-- Why this function: takes raw bytes + a length directly, no schema setup → ideal first
-  harness. Parses untrusted input (the attack surface).
+- This was my introduction to the fuzzing workflow: writing a harness, instrumenting the
+  target, providing a corpus, running libFuzzer, reading coverage, and interpreting a
+  crash-free result.
+- Why this function: it takes raw bytes plus a length directly and requires no schema setup,
+  so it is a simple first target. It is not yet an attempt to reproduce a known CVE.
 
 ## Harness
 - See `resources/test_fuzz1.c` for the source.
@@ -24,7 +26,12 @@ resources/test_fuzz1.c libtasn1-4.19.0/lib/.libs/libtasn1.a -o fuzz_get_length_d
 - Expected: this function is continuously fuzzed by OSS-Fuzz. "No crash" is a valid result.
 
 ## What I learned
-- The real work of fuzzing is writing the harness (choosing the surface, feeding input),
-  not running the tool.
+- The real work of fuzzing is writing the harness (choosing the surface and feeding input),
+  not merely starting libFuzzer.
 - Compared my harness to the project's official one (`fuzz/asn1_get_length_der_fuzzer.c`):
   nearly identical; the only real difference is their 512-byte size cap to focus mutations.
+- Before attempting a CVE, I learned the complete loop: instrument the library, pass raw
+  bytes to a real parser function, handle output parameters correctly, free library-owned
+  memory, collect coverage, and distinguish a crash-free run from a harness problem.
+- From case2 onward, the objective changes: I try to rediscover CVE-2018-6003 in the older
+  and vulnerable libtasn1 4.12.

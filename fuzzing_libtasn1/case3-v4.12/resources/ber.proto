@@ -1,0 +1,11 @@
+syntax = "proto3";
+message BerNode {
+  uint32 tag = 1;
+  oneof content {
+    Container constructed = 2;
+    bytes    leaf        = 3;
+  }
+}
+message Container {
+  repeated BerNode children = 1;
+}

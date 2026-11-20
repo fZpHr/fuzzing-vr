@@ -1,12 +1,16 @@
-# Custom libFuzzer harness for GNU libtasn1 (targeting CVE-2018-6003)
+# Case 2 — First attempt to reproduce CVE-2018-6003
 
 ## Target
 - GNU libtasn1 4.12 (vulnerable version; the bug was fixed in 4.13), function
   `asn1_decode_simple_ber`.
 - Why this function: it takes raw bytes + a length directly, with no schema setup, and it
   parses untrusted BER input — a clean attack surface, ideal to write a harness against.
-- Goal: bug rediscovery — point my own harness at a known, patched CVE on an old version,
-  as a way to validate the harness on a target where a real bug is known to exist.
+- Goal: bug rediscovery — after learning the harness workflow in case1, point my own
+  harness at a known, patched CVE on the vulnerable 4.12 version. At this stage I assume
+  that a raw input mutator can reach the recursive decoder path.
+- Result: the crash does not reproduce because the target has strict early validation.
+  The exact trigger was not understood yet; case3 investigates why raw and generated
+  structures are filtered out and case4 builds the final targeted harness.
 
 ## Harness
 - See `resources/` for the harness source.
@@ -22,7 +26,7 @@ make
 
 link the harness with the fuzzer engine
 
-clang -g -O1 -fsanitize=address,fuzzer -I lib/includes harness.c lib/.libs/libtasn1.a -o fuzz_ber
+clang -g -O1 -fsanitize=address,fuzzer -I lib/includes test_fuzz_ber.c lib/.libs/libtasn1.a -o fuzz_ber
 ./fuzz_ber corpus_ber/ -max_len=512
 
 
