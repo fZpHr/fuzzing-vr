@@ -1,10 +1,8 @@
 # fuzzing
 
-Learning vulnerability research through fuzzing: Antonio Morales'
-[Fuzzing101](https://github.com/antonio-morales/Fuzzing101) course (AFL++), then my own
-harnesses written from scratch (libFuzzer).
+Learning vulnerability research through fuzzing with AFL++ and libFuzzer.
 
-## Guided exercise (AFL++)
+## Guided exercise — Antonio Morales' [Fuzzing101](https://github.com/antonio-morales/Fuzzing101)
 - [Xpdf 3.02 / pdftotext — CVE-2019-13288](./fuzzing_PDFtoTEXT) — uncontrolled recursion /
   stack exhaustion. Crash found, triaged with gdb, minimized with afl-tmin.
 
